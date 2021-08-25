@@ -1,0 +1,76 @@
+﻿<div class="dropdown">
+	<button @onclick="ToggleDropdown" class="dropButton">@CurrentLabel</button>
+	<div id="myDropdown" hidden="@HideDropdown" class="dropdown-content">
+		@foreach (var element in Elements)
+		{
+			<button @onclick="() => DropdownItemClicked(element)" selected="@element.Selected" class="dropdown-content-element">@element.Name</button>
+		}
+	</div>
+</div>
+
+@code {
+	[Parameter]
+	public string Label { get; set; }
+
+	[Parameter]
+	public List<DropdownItem> Elements { get; set; }
+
+	public string CurrentLabel = "Loading label...";
+	private bool HideDropdown { get; set; } = true;
+
+	// Wrapper function for all functions invoked upon clicking a dropdown list element.
+	private void DropdownItemClicked(DropdownItem element)
+	{
+		Select(element);
+		ToggleDropdown();
+	}
+
+	// Toggles whether the drop-down menu is present.
+	private void ToggleDropdown()
+	{
+		HideDropdown = !HideDropdown;
+	}
+
+	// Helper function to circumvent Parameter limitations.
+	// Without this explicitly running at page-load-time, there is no way to make this assignment happen without user input.
+	public void GetCurrentLabel()
+	{
+		CurrentLabel = Label;
+	}
+
+	// Select which element in the drop-down list will be selected and shown.
+	// TODO: Make selected element in drop-down list highlighted.  Currently the elements are read-only. 
+	public void Select(DropdownItem chosenElement)
+	{
+		foreach (DropdownItem element in Elements)
+		{
+			if (chosenElement == element)
+			{
+				if (element.Selected == false)
+				{
+					element.Selected = true;
+					CurrentLabel = chosenElement.Name;
+				}
+				else if (element.Selected == true)
+				{
+					element.Selected = false;
+					CurrentLabel = Label;
+				}
+			}
+			else
+			{
+				if (element.Selected == true)
+				{
+					element.Selected = false;
+				}
+			}
+		}
+	}
+
+	// This task kicks off when the page first loads.
+	// It sets the label of the drop-down list to be the Current Label, instead of a generic label.
+	protected override async Task OnInitializedAsync()
+	{
+		GetCurrentLabel();
+	}
+}

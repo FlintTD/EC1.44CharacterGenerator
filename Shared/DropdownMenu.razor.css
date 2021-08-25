@@ -1,0 +1,54 @@
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    width: inherit;
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Button */
+.dropButton {
+    width: inherit;
+    background-color: indianred;
+    color: white;
+    padding: 12px;
+    font-size: 16px;
+    text-align: left;
+    border: none;
+    cursor: pointer;
+}
+
+/* Dropdown button on hover & focus */
+.dropButton:hover, .dropButton:focus {
+    background-color: #CD7777;
+}
+
+/* List of content in the dropdown (Hidden by Default) */
+.dropdown-content {
+    width: inherit;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* An individual element inside the dropdown list */
+.dropdown-content-element {
+    width: inherit;
+    background-color: dimgrey;
+    color: white;
+    padding: 12px;
+    text-align: left;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content-element button:hover {
+    background-color: indianred;
+}
+
+/* Change color of the one dropdown link which has been selected */
+.dropdown-content-element[selected] {
+    background-color: indianred;
+}
